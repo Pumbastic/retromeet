@@ -6,10 +6,13 @@ import {
   Card,
   CardActions,
   CardContent,
+  IconButton,
+  Input,
   Tooltip,
   Typography
 } from 'material-ui';
 import { CircularProgress } from 'material-ui/Progress';
+import { Search, LineWeight, Reorder } from 'material-ui-icons';
 import {
   QUERY_ERROR_KEY,
   QUERY_STATUS_FAILURE,
@@ -21,9 +24,16 @@ import {
 } from '../../services/websocket/query';
 import Column from '../../containers/Retro/Column';
 import Steps from '../../containers/Retro/Steps';
+import CsvExport from './CsvExport';
 import { initialsOf } from '../../services/utils/initials';
 
 class Retro extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { search: '', sort: false, csvExport: false };
+    this.onChange.bind(this);
+  }
+
   componentWillMount() {
     this.joinRetro();
   }
@@ -39,6 +49,10 @@ class Retro extends Component {
     }
   }
 
+  onChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
   joinRetro = () => {
     const { joinRetro, match: { params: { retroShareId } } } = this.props;
     const { socket } = this.context;
@@ -46,9 +60,11 @@ class Retro extends Component {
   };
 
   render() {
+    const { sort, search, csvExport } = this.state;
     const {
       classes,
       columns,
+      cards,
       users,
       history,
       joinRetroQuery: {
@@ -56,14 +72,33 @@ class Retro extends Component {
         [QUERY_ERROR_KEY]: joinError
       }
     } = this.props;
+    const csvExportProps = { cards, columns, csvExport, classes };
     switch (joinStatus) {
       case QUERY_STATUS_SUCCESS:
         return (
           <div className={classes.root}>
+            <CsvExport {...csvExportProps} />
+            <div className={classes.toolbar}>
+              <IconButton name="sort" onClick={() => this.onChange({ target: { name: 'sort', value: !sort } })}>
+                {this.state.sort ? (
+                  <LineWeight className={classes.icon} />
+                ) : (
+                  <Reorder className={classes.icon} />
+                )}
+              </IconButton>
+              <Input
+                className={classes.search}
+                value={this.state.search}
+                name="search"
+                id="input-with-icon-adornment"
+                startAdornment={<Search />}
+                onChange={this.onChange}
+              />
+            </div>
             <Steps />
             <div className={classes.columns}>
               {columns.map(column => (
-                <Column key={column.id} column={column} />
+                <Column key={column.id} column={column} sort={sort} search={search} />
               ))}
             </div>
             <div className={classes.users}>
@@ -121,6 +156,11 @@ Retro.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     icon: PropTypes.string.isRequired
+  })).isRequired,
+  cards: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    columnId: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired
   })).isRequired,
   users: PropTypes.object.isRequired,
   // Queries
