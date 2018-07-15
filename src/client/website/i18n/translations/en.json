@@ -8,6 +8,8 @@
     "moderator-panel": "MODERATOR PANEL",
     "add-card-label": "What's on your mind?",
     "confirm-delete-card": "Are you sure you want to delete?",
+    "confirm-merge-card": "Are you sure you want to merge?",
+    "confirm-export-csv": "Would you like to export cards to CSV?",
     "remaining-votes": "Remaining votes",
     "previous-step": "Go back to the previous step",
     "next-step": "Proceed to the next step of the meeting"

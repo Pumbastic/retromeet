@@ -1,4 +1,6 @@
 import React from 'react';
+import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContext } from 'react-dnd';
 import PropTypes from 'prop-types';
 import Header from './../../containers/App/Header';
 import Footer from './../../containers/App/Footer';
@@ -39,4 +41,4 @@ App.contextTypes = {
   socket: PropTypes.object.isRequired
 };
 
-export default App;
+export default DragDropContext(HTML5Backend)(App);

@@ -24,7 +24,7 @@ const styles = theme => ({
   addCardIcon: {
     float: 'right',
     width: '32px',
-    height: '32px',
+    height: '48px',
     transition: 'all .2s ease',
     color: theme.palette.midGrey,
     '&:hover': {

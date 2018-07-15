@@ -25,6 +25,37 @@ const styles = theme => ({
     height: 64,
     margin: theme.spacing.unit
   },
+  icon: {
+    color: '#0099ff',
+    opacity: 0.75,
+    width: 24,
+    height: 24
+  },
+  saveIcon: {
+    color: '#0099ff',
+    opacity: 0.75,
+    position: 'fixed',
+    bottom: '80px',
+    right: '20px',
+    width: 48,
+    height: 48,
+    zIndex: 10001
+  },
+  search: {
+    zIndex: 10001,
+    color: '#0099ff',
+    opacity: 0.75
+  },
+  toolbar: {
+    zIndex: 10001,
+    position: 'fixed',
+    top: '20px',
+    right: '100px',
+    color: '#0099ff',
+    width: 'auto',
+    textAlign: 'right',
+    padding: '0'
+  },
   badge: {
     margin: theme.spacing.unit * 2
   },
